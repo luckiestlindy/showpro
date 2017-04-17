@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lindy Reaper Control</title>
+        <meta charset="UTF-8" />
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+<!-- <meta name="viewport" content="width=device-width, user-scalable=no" /> -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel="stylesheet" type="text/css" media="all" href="osc-view.css"></link>
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+
+        <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+        rel = "stylesheet">
+        <script src ="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script src="bower_components/rangeslider.js/dist/rangeslider.min.js"></script>
+        <link type="text/css" media="all" href="bower_components/rangeslider.js/dist/rangeslider.css" rel='stylesheet'>
+        <script src="bower_components/osc.js/dist/osc-browser.min.js"></script>
+        <script src ='bower_components/scripts.js'></script>
+        <script src="https://use.fontawesome.com/d4aa8255b5.js"></script>
+
+    </head>
+
+    <body>
+        <h1>osc.js Web Socket Demo</h1>
+
+        <!-- <div id="messageArea">
+            <p id="messageLabel">OSC Message:</p>
+            <pre id="message"></pre>
+        </div> -->
+
+
+        <!-- <button onclick="gotomarker()">go to 1</button> -->
+        <button id='refresh' class='act-but' onclick="sendDaw('/action/41743', 'i', 1), refresh()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+
+
+        <div id='actions'>
+          <div class='act-pair'>
+            <button class='act-but' onclick="sendDaw('/action/40490', 'i', 1)">rec arm all</button>
+            <button class='act-but' onclick="sendDaw('/action/40491', 'i', 1)">rec unarm all</button>
+          </div>
+          <div class='act-pair'>
+            <button class='act-but' onclick="sendDaw('/action/40341', 'i', 1)">mute all</button>
+            <button class='act-but' onclick="sendDaw('/action/40339', 'i', 1)">unmute all</button>
+          </div>
+
+          <div class='act-pair'>
+            <button class='act-but' onclick="sendDaw('/action/40667', 'i', 1)">Stop/Save</button>
+            <button class='act-but' onclick="sendDaw('/action/40668', 'i', 1)">Stop/Delete</button>
+          </div>
+        </div>
+
+
+
+          <!-- <button class='ch-but monitor' id='/track/1/monitor/toggle' onclick="sendDesk('/1/volume1Val', 'i', 1)">2</button> -->
+        <div id='banking'>
+          <button class='bank-but monitor' id='/device/track/bank/+' onclick="sendDaw('/device/track/bank/+', 'i', 1)"><i class="fa fa-2x fa-arrow-circle-up" aria-hidden="true"></i></button>
+          <button class='bank-but monitor' id='/device/track/bank/-' onclick="sendDaw('/device/track/bank/-', 'i', 1)"><i class="fa fa-2x fa-arrow-circle-down" aria-hidden="true"></i></button>
+        </div>
+
+
+
+        <div id='channel-bank'>
+          <div id='ch0' class='channel'>
+            <div class='ch-but-wrap'>
+            </div>
+            <div class='meter-wrapper'>
+            </div>
+          </div>
+          <div id='ch7' class='channel'>
+            <div class='ch-but-wrap'>
+            </div>
+            <div class='meter-wrapper'>
+            </div>
+          </div>
+          <div id='ch1' class='channel'>
+            <div class='ch-but-wrap'>
+              <button class='ch-but mute' id='/track/1/mute/toggle' onclick="sendDaw('/track/1/mute/toggle', 'i', 1)">M</button>
+              <button class='ch-but solo' id='/track/1/solo/toggle' onclick="sendDaw('/track/1/solo/toggle', 'i', 1)">S</button>
+              <button class='ch-but monitor' id='/track/1/monitor/toggle' onclick="sendDaw('/track/1/monitor/toggle', 'i', 1)">I</button>
+              <button class='ch-but recarm' id='/track/1/recarm/toggle' onclick="sendDaw('/track/1/recarm/toggle', 'i', 1)">A</button>
+              <p class='dbfs' id='/track/1/vu-label'>-∞</p>
+              <p class='dbfs'>dBFS</p>
+            </div>
+            <div class='meter-wrapper'>
+              <meter id="/track/1/vu"  min='0' max='100'  low='70' high='82' optimum='100' value='5'>track 2 meter</meter>
+              <p id="/track/1/name">name</p>
+              <ul id="scale">
+                  <li style="height: 5%"><span></span></li>
+                  <li>-0</li>
+                  <li>-07</li>
+                  <li>-14</li>
+                  <li>-20</li>
+                  <li>-28</li>
+                  <li>-34</li>
+                  <li>-41</li>
+                  <li>-48</li>
+                  <li>-55</li>
+                  <li style="height: 5%"><span ></span></li>
+                </ul>
+            </div>
+          </div>
+          <div id='ch2' class='channel'>
+            <div class='ch-but-wrap'>
+              <button class='ch-but mute' id='/track/2/mute/toggle' onclick="sendDaw('/track/2/mute/toggle', 'i', 1)">M</button>
+              <button class='ch-but solo' id='/track/2/solo/toggle' onclick="sendDaw('/track/2/solo/toggle', 'i', 1)">S</button>
+              <button class='ch-but monitor' id='/track/2/monitor/toggle' onclick="sendDaw('/track/2/monitor/toggle', 'i', 1)">I</button>
+              <button class='ch-but recarm' id='/track/2/recarm/toggle' onclick="sendDaw('/track/2/recarm/toggle', 'i', 1)">A</button>
+              <p class='dbfs' id='/track/2/vu-label'>-∞</p>
+              <p class='dbfs'>dBFS</p>
+            </div>
+            <div class='meter-wrapper'>
+              <meter id="/track/2/vu"  min='0' max='100'  low='70' high='82' optimum='100' value='5'>track 2 meter</meter>
+              <p id="/track/2/name">name</p>
+              <ul id="scale">
+                  <li style="height: 5%"><span></span></li>
+                  <li>-0</li>
+                  <li>-07</li>
+                  <li>-14</li>
+                  <li>-20</li>
+                  <li>-28</li>
+                  <li>-34</li>
+                  <li>-41</li>
+                  <li>-48</li>
+                  <li>-55</li>
+                  <li style="height: 5%"><span ></span></li>
+                </ul>
+            </div>
+          </div>
+        </div>
+
+        <div id='master'>
+
+          <div id='masterL' class='channel'>
+            <p class='dbfs' id='/track/2/vu-label'>-∞</p>
+            <p class='dbfs'>dBFS</p>
+            <div class='meter-wrapper'>
+              <meter id="/master/vu/L"  min='0' max='100'  low='70' high='82' optimum='100' value='5'>Master L meter</meter>
+              <!-- <p id="/track/2/name">name</p> -->
+              <ul id="scale">
+                  <li style="height: 5%"><span></span></li>
+                  <li>-0</li>
+                  <li>-07</li>
+                  <li>-14</li>
+                  <li>-20</li>
+                  <li>-28</li>
+                  <li>-34</li>
+                  <li>-41</li>
+                  <li>-48</li>
+                  <li>-55</li>
+                  <li style="height: 5%"><span ></span></li>
+                </ul>
+            </div>
+          </div>
+          <div id='masterR' class='channel-master'>
+            <p class='dbfs' id='/track/2/vu-label'>-∞</p>
+            <p class='dbfs'>dBFS</p>
+            <div class='meter-wrapper'>
+              <meter id="/master/vu/R"  min='0' max='100'  low='70' high='82' optimum='100' value='5'>Master R meter</meter>
+              <!-- <p id="/track/2/name">name</p> -->
+              <ul id="scale">
+                  <li style="height: 5%"><span></span></li>
+                  <li>-0</li>
+                  <li>-07</li>
+                  <li>-14</li>
+                  <li>-20</li>
+                  <li>-28</li>
+                  <li>-34</li>
+                  <li>-41</li>
+                  <li>-48</li>
+                  <li>-55</li>
+                  <li style="height: 5%"><span ></span></li>
+                </ul>
+            </div>
+          </div>
+
+          <div id='solo'>
+            <button class='act-but' onclick="sendDaw('/soloreset', 'i', 1)">Solo Clear</button>
+            <div id='anysolo' class='led'></div>
+          </div>
+        </div>
+
+        <div id='transport'>
+          <div id='markers'>
+            <h3 id='/lastmarker/number/str'>#</h3>
+            <h3 id="/lastmarker/name">Marker Name</h3>
+          </div>
+          <div id="timeArea">
+              <!-- <p id="timeLabel">Time:</p> -->
+              <pre id="time">Time</pre>
+          </div>
+          <button class='tp-button' id='play' onclick="sendDaw('/transport/play', 'i', 1)"><i class="fa fa-2x fa-play-circle" aria-hidden="true"></i></button>
+          <button class='tp-button' id='stop' onclick="sendDaw('/transport/stop', 'i', 1)"><i class="fa fa-2x fa-stop-circle" aria-hidden="true"></i></button>
+          <button class='tp-button' id='record' onclick="sendDaw('/transport/record', 'i', 1)"><i id='record-spin' class="fa fa-2x fa-dot-circle-o fa-spin" aria-hidden="true"></i></button>
+        </div>
+
+
+
+    </body>
+</html>
