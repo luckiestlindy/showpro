@@ -1,6 +1,6 @@
 # OSC Controller for Reaper live capture sessions and Digico Live Consoles
 
-This project is dependent on Colin Clark's osc.js(https://github.com/colinbdclark/osc.js) library.  
+This project is dependent on [Colin Clark's osc.js](https://github.com/colinbdclark/osc.js) library.  
 
 This example opens a Web Socket in a web page that communicates with a Node.js server.
 The server is responsible for relaying OSC messages bidirectionally between the web page and set of
